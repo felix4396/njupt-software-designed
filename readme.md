@@ -22,7 +22,7 @@ Python==3.8.18
 
 Pyqt5==5.15.10
 
-### 环境配置教程：
+### 环境配置教程（二选一）：
 
 `anaconda+vscode`：[Anaconda + VSCode 最详细教程 - 简书 (jianshu.com)](https://www.jianshu.com/p/ef1ae10ba950)
 
