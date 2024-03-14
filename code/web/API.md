@@ -24,22 +24,21 @@
 
 ```
 POST  /api/mgr/signin  HTTP/1.1
-Content-Type:   application/x-www-form-urlencoded
+Content-Type:   Content-Type: application/json
 ```
 
 ### 请求参数
 
-http 请求消息 body 中参数以格式 x-www-form-urlencoded 存储
+http 请求消息 body 中参数以格式application/json存储
 
-需要携带如下参数，
+```
+{
+    "username" : "xxxx",
+    "password" : "yyyy"
+}
+```
 
-- username
 
-  用户名
-
-- password
-
-  密码
 
 ### 响应消息
 
@@ -168,8 +167,7 @@ http 请求消息 body 携带添加用户的信息
     "data":{
         "name":"武汉市桥西医院",
         "password":"xxxxxxx",
-        "phone_number":"13345679934",
-        "address":"武汉市桥西医院北路"
+		"user_type":"2"
     }
 }
 ```
@@ -402,7 +400,7 @@ http 响应消息 body 中， 数据以json格式存储，
 }
 ```
 
-ret 为 0 表示登录成功
+ret 为 0 表示查看成功
 
 retlist 里面包含了用户信息列表。
 
@@ -421,17 +419,14 @@ Content-Type:   application/x-www-form-urlencoded
 
 ### 请求参数
 
-http 请求消息 body 中 参数以 格式 x-www-form-urlencoded 存储
+```
+{
+    "username" : "xxxx",
+    "password" : "yyyy"
+}
+```
 
-需要携带如下参数，
 
-- username
-
-  用户名
-
-- password
-
-  密码
 
 ### 响应消息
 
@@ -522,7 +517,7 @@ retlist 里面包含了用户信息列表。
 #### 请求消息
 
 ```
-POST  /api/users/control  HTTP/1.1
+POST  /api/users/data/  HTTP/1.1
 Content-Type:   application/json
 ```
 
@@ -534,7 +529,8 @@ http 请求消息 body 携带
 
 ```
 {
-    "action":"start"
+    "action":"control"，
+    "status":"start",
 }
 ```
 
@@ -569,6 +565,125 @@ ret 为 0 表示成功。
 {
     "ret": 1,    
     "msg": "链接不上模拟端"
+}
+```
+
+ret 不为 0 表示失败， msg字段描述添加失败的原因
+
+### 模拟端上传数据
+
+#### 请求消息
+
+```
+POST  /api/users/savedata/  HTTP/1.1
+Content-Type:   application/json
+```
+
+#### 请求参数
+
+http 请求消息 body 携带
+
+消息体的格式是json，如下示例：
+
+```
+{
+    "TERMINAL_ID":"xxxxxx"，
+    "user":"采样者1",
+    "file_name"："跑步"，
+    "data"："100634   82355"
+}
+```
+
+#### 响应消息
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+
+#### 响应内容
+
+http 响应消息 body 中， 数据以json格式存储，
+
+如果添加成功，返回如下
+
+```
+{
+    "ret": 0
+}
+```
+
+ret 为 0 表示成功。
+
+如果执行失败，返回失败的原因，示例如下
+
+```
+{
+    "ret": 1
+}
+```
+
+ret 不为 0 表示失败， msg字段描述添加失败的原因
+
+### 删除用户数据
+
+#### 请求消息
+
+```
+DELETE  /api/users/data  HTTP/1.1
+Content-Type:   application/json
+```
+
+#### 请求参数
+
+http 请求消息 body 携带要删除用户的user_name
+
+消息体的格式是json，如下示例：
+
+```
+{
+    "action":"clean_data",
+    "user_name": "采样者1"
+}
+```
+
+其中
+
+`action` 字段固定填写 `del_user` 表示删除一个用户
+
+`user_name` 字段为要删除的用户的账号
+
+服务端接受到该请求后，应该在系统中尝试删除该账号对应的用户。
+
+
+
+#### 响应消息
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+
+#### 响应内容
+
+http 响应消息 body 中， 数据以json格式存储，
+
+如果删除成功，返回如下
+
+```
+{
+    "ret": 0
+}
+```
+
+ret 为 0 表示成功。
+
+如果删除失败，返回失败的原因，示例如下
+
+```
+{
+    "ret": 1,    
+    "msg": "账号为xxx的用户数据不存在"
 }
 ```
 

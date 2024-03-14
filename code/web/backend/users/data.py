@@ -16,6 +16,17 @@ def get_data(request):
         return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的用户不存在'})
 
 
+def clean_data(request):
+    username = request.params['user_name']
+    try:
+        data = Data.objects.get(user_name=username)
+    except Data.DoesNotExist:
+        return JsonResponse({'ret': 0, 'msg': f'用户名为`{username}`的用户数据不存在'})
+
+    data.delete()
+    return JsonResponse({'ret': 0})
+
+
 def control(request):
     status = request.params['status']
 
@@ -33,3 +44,5 @@ def dispatcher(request):
         return get_data(request)
     elif action == 'control':
         return control(request)
+    elif action == 'clean_data':
+        return clean_data(request)

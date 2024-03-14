@@ -52,6 +52,11 @@ def send_data(user, file_name):
             frame = build_frame(user, file_name, ','.join(data))
             try:
                 response = requests.post(url, data=json.dumps(frame))
+                if response.status_code == 200:
+                    print('请求成功！')
+                    print('响应内容：', response.text)
+                else:
+                    print('请求失败：', response.status_code)
             except Exception as e:
                 print(f"Error sending data: {e}")
             time.sleep(1 / SEND_FREQUENCY)  # 控制发送频率

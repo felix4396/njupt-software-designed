@@ -17,7 +17,7 @@ class ChildWindow(QDialog):
         # self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.setWindowTitle('参数配置')
         self.setFixedSize(500, 230)
-        self.combo = t.ComboCheckBox(sd.FILE_NAMES)
+        self.combo = t.ComboCheckBox(sd.USER)
         self.get_button = QPushButton('确定')
         self.get_button.setFixedSize(100, 50)
         layout = QVBoxLayout()
@@ -27,9 +27,9 @@ class ChildWindow(QDialog):
         self.get_button.clicked.connect(self.get_selected)
 
     def get_selected(self):
-        file_name = self.combo.get_selected()
-        print(file_name)
-        sd.file_names = file_name
+        user = self.combo.get_selected()
+        print(user)
+        sd.users = user
         self.close()
 
 
