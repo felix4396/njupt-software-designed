@@ -1,9 +1,11 @@
 from django.urls import path
 
-from . import func
-
+from . import data
+from . import sign_in_out
+from . import saveData
 urlpatterns = [
-    path('login/', func.printlist),
-    path('user/', func.get_user),
-    path('data/', func.get_data),
+    path('data/', data.dispatcher),
+    path('signin/', sign_in_out.login),
+    path('signout/', sign_in_out.logout),
+    path('savedata/', saveData.savedata)
 ]

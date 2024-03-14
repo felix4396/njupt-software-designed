@@ -15,8 +15,7 @@ def add_user(request):
         record = User.objects.create(
             name=info['name'],
             password=info['password'],
-            phone_number=info['phone_number'],
-            adress=info['address']
+            user_type=info['user_type']
         )
         return JsonResponse({'ret': 0, 'id': record.id})
     except Exception as e:
@@ -50,7 +49,19 @@ def delete_user(requests):
     user.delete()
 
     return JsonResponse({'ret': 0})
-    pass
+
+
+def get_data(request):
+    username = request.params['user_name']
+
+    qs = Data.objects.values()
+
+    qs = qs.filter(user_name=username)
+    if qs:
+        retlist = list(qs)
+        return JsonResponse({'ret': 0, 'retlist': retlist})
+    else:
+        return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的用户不存在'})
 
 
 def dispatcher(request):
@@ -75,6 +86,8 @@ def dispatcher(request):
         return modify_user(request)
     elif action == 'del_user':
         return delete_user(request)
+    elif action == 'get_data':
+        return get_data(request)
 
     else:
         return JsonResponse({'ret': 1, 'msg': '不支持该类型http请求'})

@@ -84,7 +84,7 @@ ret 不为 0 表示登录失败， msg字段描述登录失败的原因
 #### 请求消息
 
 ```
-GET  /api/mgr/user?action=list_user  HTTP/1.1
+GET  /api/mgr/users?action=list_user  HTTP/1.1
 ```
 
 #### 请求参数
@@ -152,7 +152,7 @@ retlist 里面包含了所有的用户信息列表。
 #### 请求消息
 
 ```
-POST  /api/mgr/user  HTTP/1.1
+POST  /api/mgr/users  HTTP/1.1
 Content-Type:   application/json
 ```
 
@@ -168,7 +168,7 @@ http 请求消息 body 携带添加用户的信息
     "data":{
         "name":"武汉市桥西医院",
         "password":"xxxxxxx",
-        "phonenumber":"13345679934",
+        "phone_number":"13345679934",
         "address":"武汉市桥西医院北路"
     }
 }
@@ -224,7 +224,7 @@ ret 不为 0 表示失败， msg字段描述添加失败的原因
 #### 请求消息
 
 ```
-PUT  /api/mgr/user  HTTP/1.1
+PUT  /api/mgr/users  HTTP/1.1
 Content-Type:   application/json
 ```
 
@@ -238,9 +238,7 @@ http 请求消息 body 携带修改用户的信息
 {
     "action":"modify_user",
     "user_name": "采样者1",
-    "newdata":{
-        "password":"xxxxxxx"
-    }
+    "new_password":"xxxxxxx"
 }
 ```
 
@@ -295,7 +293,7 @@ ret 不为 0 表示失败， msg字段描述添加失败的原因
 #### 请求消息
 
 ```
-DELETE  /api/mgr/user  HTTP/1.1
+DELETE  /api/mgr/users  HTTP/1.1
 Content-Type:   application/json
 ```
 
@@ -362,7 +360,7 @@ ret 不为 0 表示失败， msg字段描述添加失败的原因
 
 #### 请求消息
 
-`GET  /api/mgr/user?action=get_data&user_name=xxx  HTTP/1.1`
+`GET  /api/mgr/users?action=get_data&user_name=xxx  HTTP/1.1`
 
 #### 请求参数
 
@@ -417,7 +415,7 @@ retlist 里面包含了用户信息列表。
 ### 请求消息
 
 ```
-POST  /api/user/signin  HTTP/1.1
+POST  /api/users/signin  HTTP/1.1
 Content-Type:   application/x-www-form-urlencoded
 ```
 
@@ -473,7 +471,7 @@ ret 不为 0 表示登录失败， msg字段描述登录失败的原因
 
 #### 请求消息
 
-`GET  /api/user/data?action=get_data&user_name=xxx  HTTP/1.1`
+`GET  /api/users/data?action=get_data&user_name=xxx  HTTP/1.1`
 
 #### 请求参数
 
@@ -524,7 +522,7 @@ retlist 里面包含了用户信息列表。
 #### 请求消息
 
 ```
-POST  /api/user/control  HTTP/1.1
+POST  /api/users/control  HTTP/1.1
 Content-Type:   application/json
 ```
 

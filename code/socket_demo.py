@@ -2,7 +2,8 @@ import os
 import time
 import socket
 import threading
-
+import requests
+import json
 
 FILE_NAMES = ["静坐采样数据", "跑步", "上楼运动后采样数据"]
 file_names = ["静坐采样数据", "跑步", "上楼运动后采样数据"]
@@ -16,10 +17,19 @@ restart_flag = 0
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 12345
 
+url = 'http://192.168.0.125/api/users/savedata/'
 
+
+# def build_frame(user, file_name, data):
+#     return f"{TERMINAL_ID},{user},{file_name},{data}"
 def build_frame(user, file_name, data):
-    return f"{TERMINAL_ID},{user},{file_name},{data}"
-
+    retlist = {
+        "TERMINAL_ID": TERMINAL_ID,
+        "user": user,
+        "file_name": file_name,
+        "data": data
+    }
+    return retlist
     # 读取数据并发送
 
 
@@ -41,39 +51,10 @@ def send_data(user, file_name):
             data = line.strip().split('   ')
             frame = build_frame(user, file_name, ','.join(data))
             try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                    s.connect((SERVER_ADDRESS, SERVER_PORT))
-                    s.sendall(frame.encode('utf8'))
+                response = requests.post(url, data=json.dumps(frame))
             except Exception as e:
                 print(f"Error sending data: {e}")
             time.sleep(1 / SEND_FREQUENCY)  # 控制发送频率
-
-# 控制发送数据的线程
-
-
-class SendThread(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-        self.file_names = FILE_NAMES
-        self.user = USER
-        self._running = threading.Event()
-
-    def run(self):
-        self._running.set()
-        while self._running.isSet():
-            # with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            #     s.connect((SERVER_ADDRESS, SERVER_PORT))
-            #     s.sendall("hello".encode('utf8'))
-            for file_name in self.file_names:
-                for user in self.user:
-                    send_data(user, file_name)
-                    print(f"Sending {file_name} from {user}...")
-
-    def stop(self):
-        self._running.clear()
-
-    def resume(self):
-        self._running.set()
 
 
 def thread_send():
@@ -97,10 +78,8 @@ def thread_send():
                     break
 
                 send_data(user, file_name)
-                # print(f"Sending {file_name} from {user}...")
 
 
-# thread = threading.Thread(target=thread_send, args=(user, file_names))
 thread = threading.Thread(target=thread_send, args=())
 
 
@@ -109,36 +88,13 @@ def restart_thread():
     restart_flag = 1
     print(2)
     time.sleep(2.0)
-    # if thread.is_alive():
-    #     thread.join()
-    #     print(1)
     restart_flag = 0
     thread = threading.Thread(target=thread_send, args=())
     thread.start()
 
 
 if __name__ == "__main__":
-    # 创建发送线程
-    # send_thread = SendThread()
-    # send_thread.start()
 
-    # try:
-    #     while True:
-    #         command = input("Enter 'start' to start sending data, 'stop' to stop: ")
-    #         if command.lower() == 'start':
-    #             send_thread.start()
-    #         elif command.lower() == 'resume':
-    #             send_thread.run()
-    #         elif command.lower() == 'stop':
-    #             send_thread.stop()
-    #         else:
-    #             print("Invalid command. Please enter 'start' or 'stop'.")
-    # except KeyboardInterrupt:
-    #     print("Stopping...")
-    #     send_thread.stop()
-    #     send_thread.join()
-    # thread = threading.Thread(target=thread_send, args=(USER, FILE_NAMES))
-    # thread.start()
     restart_thread()
     try:
         while True:
