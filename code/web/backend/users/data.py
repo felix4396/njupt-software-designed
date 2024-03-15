@@ -11,6 +11,8 @@ def get_data(request):
     qs = qs.filter(user_name=username)
     if qs:
         retlist = list(qs)
+        if len(retlist) > 11:
+            retlist = retlist[-11:]
         return JsonResponse({'ret': 0, 'retlist': retlist})
     else:
         return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的用户不存在'})

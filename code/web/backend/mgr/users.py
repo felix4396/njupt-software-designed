@@ -5,6 +5,7 @@ from common.models import User, Data
 
 def list_user(request):
     qs = User.objects.values()
+    qs = qs.filter(user_type=2)
     retlist = list(qs)
     return JsonResponse({'ret': 0, 'retlist': retlist})
 
@@ -27,7 +28,7 @@ def modify_user(request):
     new_password = request.params['password']
 
     try:
-        user = User.objects.get(user_name=username)
+        user = User.objects.get(name=username)
     except User.DoesNotExist:
         return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的客户不存在'})
 
@@ -41,7 +42,7 @@ def delete_user(requests):
     username = requests.params['user_name']
 
     try:
-        user = User.objects.get(user_name=username)
+        user = User.objects.get(name=username)
 
     except User.DoesNotExist:
         return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的客户不存在'})
@@ -59,9 +60,11 @@ def get_data(request):
     qs = qs.filter(user_name=username)
     if qs:
         retlist = list(qs)
+        if len(retlist) > 11:
+            retlist = retlist[-11:]
         return JsonResponse({'ret': 0, 'retlist': retlist})
     else:
-        return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的用户不存在'})
+        return JsonResponse({'ret': 1, 'msg': f'username 为`{username}`的用户数据不存在'})
 
 
 def dispatcher(request):

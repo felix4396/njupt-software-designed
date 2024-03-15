@@ -36,7 +36,7 @@ def build_frame(user, file_name, data):
 def send_data(user, file_name):
 
     path = file_name+".txt"
-    file_path = os.path.join("../数据文件/脉搏波数据文件", user, path)
+    file_path = os.path.join("..\\数据文件\\脉搏波数据文件", user, path)
     print(file_path)
     with open(file_path, 'r') as file:
         lines = file.readlines()
