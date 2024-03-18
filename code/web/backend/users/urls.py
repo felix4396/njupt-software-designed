@@ -7,5 +7,6 @@ urlpatterns = [
     path('data/', data.dispatcher),
     path('signin/', sign_in_out.login),
     path('signout/', sign_in_out.logout),
-    path('savedata/', saveData.savedata)
+    path('savedata/', saveData.savedata),
+    path('flag/', data.setflag)
 ]

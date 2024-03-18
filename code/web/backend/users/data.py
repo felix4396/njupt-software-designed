@@ -2,6 +2,8 @@ from django.http import JsonResponse
 import json
 from common.models import User, Data
 
+flag = 0
+
 
 def get_data(request):
     username = request.params['user_name']
@@ -30,9 +32,20 @@ def clean_data(request):
 
 
 def control(request):
+    global flag
     status = request.params['status']
-
+    if status == 'start':
+        flag = 1
+    elif status == 'stop':
+        flag = 0
     return JsonResponse({'ret': 0, 'msg': f'模拟端已{status}'})
+
+
+def setflag(request):
+    global flag
+    result = JsonResponse({'flag': flag})
+    # flag = request.params['flag']
+    return result
 
 
 def dispatcher(request):
@@ -48,3 +61,5 @@ def dispatcher(request):
         return control(request)
     elif action == 'clean_data':
         return clean_data(request)
+    else:
+        return setflag(request)

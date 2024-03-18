@@ -1,9 +1,11 @@
 import os
 import time
-import socket
 import threading
 import requests
 import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
+
 
 FILE_NAMES = ["静坐采样数据", "跑步", "上楼运动后采样数据"]
 file_names = ["静坐采样数据", "跑步", "上楼运动后采样数据"]
@@ -17,11 +19,13 @@ restart_flag = 0
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 12345
 
-url = 'http://192.168.0.125/api/users/savedata/'
+url = 'http://8.136.115.253/api/users/savedata/'
 
 
 # def build_frame(user, file_name, data):
 #     return f"{TERMINAL_ID},{user},{file_name},{data}"
+
+
 def build_frame(user, file_name, data):
     retlist = {
         "TERMINAL_ID": TERMINAL_ID,
@@ -62,6 +66,51 @@ def send_data(user, file_name):
             time.sleep(1 / SEND_FREQUENCY)  # 控制发送频率
 
 
+class MyHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        global flag
+        # 设置响应状态码为200
+        self.send_response(200)
+        # 设置响应头部信息
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+
+        # 读取请求正文
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+
+        # 解析 JSON 数据
+        try:
+            json_data = json.loads(post_data.decode('utf-8'))
+            flag = json_data['status']
+            if flag == 'start':
+                flag = 1
+            elif flag == 'stop':
+                flag = 0
+
+            # 构造响应数据
+            response_data = {'ret': '0', 'msg': 'success'}
+            response = json.dumps(response_data)
+            # 发送响应数据
+            self.wfile.write(response.encode('utf-8'))
+        except json.JSONDecodeError:
+            # 如果无法解析 JSON 数据，返回错误信息
+            response_data = {'ret': '1'}
+            response = json.dumps(response_data)
+            self.wfile.write(response.encode('utf-8'))
+
+
+def run_server(port=12345):
+    # 指定服务器地址和端口
+    server_address = ('127.0.0.1', port)
+    # 创建 HTTP 服务器
+    httpd = HTTPServer(server_address, MyHTTPRequestHandler)
+    # 开始监听客户端请求
+    print(f"Server running on port {port}...")
+    httpd.serve_forever()
+
+
 def thread_send():
     global restart_flag, flag, file_names, users
     while True:
@@ -86,6 +135,7 @@ def thread_send():
 
 
 thread = threading.Thread(target=thread_send, args=())
+thread_get = threading.Thread(target=run_server, args=())
 
 
 def restart_thread():

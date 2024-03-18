@@ -6,6 +6,7 @@ import socket_demo as sd
 import threading
 import time
 import test as t
+import socket_receive
 
 
 class ChildWindow(QDialog):
@@ -162,6 +163,8 @@ class MyWidget(QWidget):
 if __name__ == '__main__':
     # sd.restart_thread()
     sd.thread.start()
+    sd.thread_get.start()
+    # socket_receive.main()
 
     app = QApplication(sys.argv)
     w = MyWidget()

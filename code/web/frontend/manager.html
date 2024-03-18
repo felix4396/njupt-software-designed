@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin Admin Dashboard</title>
+    <link rel="stylesheet" href="./css/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <input type="checkbox" name="" id="menu-toggle">
+    <div class="overlay">
+        <label for="menu-toggle"></label>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-container">
+            <div class="brand">
+                <h2>
+                    <span class="lab la-staylinked"></span>
+                    菜单
+                </h2>
+            </div>
+
+            <div class="sidebar-avartar">
+                <div>
+                    <img src="./source/yea.jpg" alt="">
+                </div>
+                <div class="avartar-info">
+                    <div class="avartar-text">
+                        <h4>瑞神</h4>
+                        <!-- <small>135-6841-6239</small> -->
+                    </div>
+                    <span class="las la-angle-double-down"></span>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <button class="active" id="add">
+                            <span class="las la-adjust"></span>
+                            <span>添加一个用户</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="active" id="modify">
+                            <span class="las la-video"></span>
+                            <span>修改用户密码</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="active" id="delet">
+                            <span class="las la-chart-bar"></span>
+                            <span>删除用户信息</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="active" id="check">
+                            <span class="las la-calendar"></span>
+                            <span>查看用户信息</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="active" id="start">
+                            <!-- <span class="las la-"></span> -->
+                            <span>发送</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="active" id="stop">
+                            <!-- <span class="las la-calendar"></span> -->
+                            <span>暂停</span>
+                        </button>
+                    </li>
+                    <!-- <li>
+                        <a href="" class="disactive">
+                            <span class="las la-user"></span>
+                            <span>Account</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="sidebar-card">
+                <div class="side-card-icon">
+                    <span class="lab la-codiepie"></span>
+                </div>
+                <!-- <div>
+                    <h4>View Tutorial</h4>
+                    <p>Click to view the panel operation tutorial</p>
+                </div>
+                <button class="btn btn-main btn-block">Watch now</button> -->
+            </div>
+        </div>
+    </div>
+    <!-- 遮罩层 -->
+    <div class="overlays" id="overlay">
+        <!-- 输入框容器 -->
+        <div class="input-container">
+            <h2>请输入您的信息</h2>
+            <input type="text" id="name" placeholder="请输入姓名">
+            <input type="password" id="password" placeholder="请输入密码">
+            <select id="userType">
+                <option value="1">管理员</option>
+                <option value="2">普通用户</option>
+            </select>
+            <button onclick="submitForm()">提交</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="header-title-wrapper">
+                <label for="menu-toggle">
+                    <span class="las la-bars"></span>
+                </label>
+                <div class="header-title">
+                    <h1>数据分析</h1>
+                    <p>血氧饱和度分析可视化<span class="las la-chart-line"></span></p>
+                </div>
+            </div>
+            <div class="header-action">
+                <a href="../新拟态登录注册/index.html">
+                    <button class="btn btn-main">
+                        退出账号
+                    </button>
+                </a>
+            </div>
+            <!-- <style>
+                /* section {
+                    margin-top: 100px;
+                } */
+                .rev-content {
+                    width: 100%;
+                    height: 80%;
+                }
+                .rev-content img {
+                    width: 100%;
+                    height: 50%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            </style> -->
+        </header>
+        <main>
+            <!-- <section>
+                <h3 class="section-head">Overview</h3>
+                <div class="analytics">
+                    <div class="analytic">
+                        <div class="analytic-icon">
+                            <span class="las la-eye"></span>
+                        </div>
+                        <div class="analytic-info">
+                            <h4>Total views</h4>
+                            <h1>10.3M <small class="text-danger"> 5% </small></h1>
+                        </div>
+                    </div>
+                    <div class="analytic">
+                        <div class="analytic-icon">
+                            <span class="las la-users"></span>
+                        </div>
+                        <div class="analytic-info">
+                            <h4>Subscribers</h4>
+                            <h1>1.3K <small class="text-success"> 15% </small></h1>
+                        </div>
+                    </div>
+                    <div class="analytic">
+                        <div class="analytic-icon">
+                            <span class="las la-clock"></span>
+                        </div>
+                        <div class="analytic-info">
+                            <h4>Watch Time(hrs)</h4>
+                            <h1>1.3K <small class="text-success"> 7% </small></h1>
+                        </div>
+                    </div>
+                    <div class="analytic">
+                        <div class="analytic-icon">
+                            <span class="las la-heart"></span>
+                        </div>
+                        <div class="analytic-info">
+                            <h4>Total likes</h4>
+                            <h1>102K<small class="text-danger"> 6% </small></h1>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+
+            <section>
+                <div class="block-grid">
+                    <div class="revenue-card">
+                        <h3 class="section-head">实时数据</h3>
+                        <div class="rev-content">
+                            <img src="./source/yea.jpg" alt="">
+                            <div class="rev-info">
+                                <h3>Ralph Anderson</h3>
+                                <!-- <h1>3.5M <small>Subscribers</small></h1> -->
+                            </div>
+                            <div class="rev-sum">
+                                <h4>血氧饱和度</h4>
+                                <h2 id="oxygen">无数据</h2>
+                            </div>
+                            <!-- <div class="revenue-board">
+                                <canvas
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="graph-card">
+                        <h3 class="section-head">历史数据</h3>
+                        <div class="graph-content">
+                            <div class="graph-head">
+                                <div class="icons-wrapper">
+                                    <div class="icon">
+                                        <span class="las la-eye text-main"></span>
+                                    </div>
+                                    <div class="icon">
+                                        <span class="las la-clock text-success"></span>
+                                    </div>
+                                </div>
+                                <div class="graph-select">
+                                    <select name="" id="users-select">
+                                        <!-- <option value="1">瑞神</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="graph-board">
+                                <canvas id="revenueChart" width="100%" height="50%"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var button_add = document.getElementById("add");
+        var button_modify = document.getElementById("modify");
+        var button_delet = document.getElementById("delet");
+        var button_check = document.getElementById("check");
+        var button_start = document.getElementById("start");
+        var button_stop = document.getElementById("stop");
+        var overlay = document.getElementById('overlay');
+        var selectElement = document.getElementById('users-select');
+        var users = [];
+        var current_user;
+        var oxygen_data = [];
+        var timer;
+        var socket = new WebSocket('ws://127.0.0.1:12345');
+        var current_oxygen='98';
+
+        socket.onopen = function() {
+            console.log('WebSocket 连接已建立');
+        };
+        socket.onmessage = function(event) {
+            console.log('收到服务器消息：', event.data);
+        };
+        socket.onerror = function(error) {
+            console.error('WebSocket 连接发生错误：', error);
+        };
+        socket.onclose = function() {
+            console.log('WebSocket 连接已关闭');
+        };
+
+        function showInputBox() {
+            overlay.style.display = 'flex';
+        }
+
+        function hideInputBox() {
+            overlay.style.display = 'none';
+        }
+
+        function submitForm() {
+            var name = document.getElementById('name').value;
+            var password = document.getElementById('password').value;
+            var user_type = document.getElementById('userType').value;
+
+            $.ajax({
+                url: 'http://127.0.0.1:80/api/mgr/users/',
+                type: 'POST',
+                data: JSON.stringify({
+                    action: 'add_user',
+                    data: {
+                        "name": name,
+                        "password": password,
+                        "user_type": user_type
+                    }
+                }),
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+            hideInputBox();
+        }
+
+        function button_down(button) {
+            button.className = "disactive";
+        }
+        function button_up(button) {
+            button.className = "active";
+        }
+
+        // window.addEventListener('resize', function () { location.reload(); });
+        button_add.addEventListener('mousedown', function () { button_down(button_add) });
+        button_add.addEventListener('mouseup', function () { button_up(button_add) });
+        button_modify.addEventListener('mousedown', function () { button_down(button_modify) });
+        button_modify.addEventListener('mouseup', function () { button_up(button_modify) });
+        button_delet.addEventListener('mousedown', function () { button_down(button_delet) });
+        button_delet.addEventListener('mouseup', function () { button_up(button_delet) });
+        button_check.addEventListener('mousedown', function () { button_down(button_check) });
+        button_check.addEventListener('mouseup', function () { button_up(button_check) });
+        button_start.addEventListener('mousedown', function () { button_down(button_start) });
+        button_start.addEventListener('mouseup', function () { button_up(button_start) });
+        button_stop.addEventListener('mousedown', function () { button_down(button_stop) });
+        button_stop.addEventListener('mouseup', function () { button_up(button_stop) });
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+            current_user = selectedValue;
+            console.log(current_user);
+        })
+
+        button_add.onclick = function () {
+            console.log("add");
+            showInputBox();
+        }
+
+        button_modify.onclick = function () {
+            var new_password = window.prompt("请输入修改后的密码：", "123456");
+            if (new_password != null) {
+                console.log(current_user)
+                $.ajax({
+                    url: 'http://127.0.0.1:80/api/mgr/users/',
+                    type: 'PUT',
+                    data: JSON.stringify({
+                        action: 'modify_user',
+                        user_name: current_user,
+                        password: new_password
+                    }),
+                    success: function (data) {
+                        console.log(data);
+                        data = data['ret'];
+                        if (data == 0) {
+                            window.alert("修改成功");
+                        } else {
+                            window.alert("修改失败");
+                        }
+                    }
+                })
+            }
+            else {
+                console.log("取消修改");
+            }
+            console.log("modify");
+        }
+
+        button_delet.onclick = function () {
+            $.ajax({
+                url: 'http://127.0.0.1:80/api/mgr/users/',
+                type: 'DELETE',
+                data: JSON.stringify({
+                    action: 'del_user',
+                    user_name: current_user
+                }),
+                success: function (data) {
+                    console.log(data);
+                    data = data['ret'];
+                    if (data == 0) {
+                        window.alert("删除成功");
+                    } else {
+                        window.alert("删除失败");
+                    }
+                }
+            })
+            console.log("delet");
+        }
+
+        button_start.onclick = function () {
+            socket.send('start');
+            console.log('start');
+        }
+
+        button_stop.onclick = function () {
+            socket.send('stop');
+            console.log('stop');
+        }
+
+        //获取用户信息
+        $.ajax({
+            url: 'http://127.0.0.1:80/api/mgr/users?action=list_user',
+            type: 'GET',
+            success: function (data) {
+                data = data['retlist'];
+                data.forEach(element => {
+                    users.push(element['name']);
+                });
+                var selectElement = document.getElementById('users-select');
+                selectElement.innerHTML = '';
+                users.forEach(function (user) {
+                    var option = document.createElement('option');
+                    option.text = user;
+                    selectElement.appendChild(option);
+                });
+            }
+        })
+
+        //图表
+        Chart.defaults.global.defaultFontFamily = "Kanit";
+        let ctx = document.querySelector("#revenueChart");
+
+        var revChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: ["Sept 1", "Sept 3", "Sept 6", "Sept 9", "Sept 12", "Sept 15"
+                    , "Sept 18", "Sept 21", "Sept 24", "Sept 27", "Sept 30"],
+                datasets: [
+                    // {
+                    //     label:"WatchTime",
+                    //     borderColor:"green",
+                    //     borderWidth:"3",
+                    //     backgroundColor:"rgba(235,247,245,0.7)",
+                    //     data:[0,30,60,25,60,25,50,10,50,90,120]
+                    // },
+                    {
+                        label: "血氧饱和度",
+                        borderColor: "blue",
+                        borderWidth: "3",
+                        backgroundColor: "rgba(233,238,253,0.7)",
+                        data: []
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                tooltips: {
+                    intersect: false,
+                    node: "index",
+                }
+            }
+        });
+
+        function sendRequest() {
+            $.ajax({
+                url: `http://127.0.0.1:80/api/mgr/users?action=get_data&user_name=${current_user}`,
+                type: 'GET',
+                success: function (data) {
+                    // console.log(data);
+                    if (data['ret'] == 0) {
+                        data = data['retlist'];
+                        data.forEach(element => {
+                            oxygen_data.push(element['blood_oxygen']);
+                        });
+                        var oxygen_num = document.getElementById('oxygen');
+                        oxygen_num.textContent = oxygen_data[oxygen_data.length - 1] + '%';
+                        revChart.data.datasets[0].data = oxygen_data;
+                        revChart.update();
+                    } else {
+                        window.alert(data['msg']);
+                        clearInterval(timer);
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            })
+            console.log("数据已刷新");
+        }
+
+        button_check.onclick = function () {
+            timer = setInterval(sendRequest, 1000);
+            console.log("check");
+        }
+    </script>
+</body>
+
+</html>
